@@ -76,7 +76,7 @@ func PostAnnotation(c *models.ReqContext, cmd dtos.PostAnnotationsCmd) response.
 	}
 
 	if err := repo.Save(&item); err != nil {
-		if errors.Is(err, annotations.ErrTimerangeMissing) {
+		if errors.Is(err, annotations.ErrTimerangeMissing) || errors.As(err, &models.ErrTagValueTooLong{}) {
 			return response.Error(400, "Failed to save annotation", err)
 		}
 		return response.Error(500, "Failed to save annotation", err)

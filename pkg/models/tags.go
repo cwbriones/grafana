@@ -4,6 +4,20 @@ import (
 	"strings"
 )
 
+const (
+	// MaxAnnotationTagValueLength is the maximum allowed length for a valid tag value.
+	MaxTagValueLength = 100
+)
+
+type ErrTagValueTooLong struct {
+	TagKey   string
+	TagValue string
+}
+
+func (e *ErrTagValueTooLong) Error() string {
+	return fmt.Sprintf("value for tag '%s' is too long: %d > %d", e.TagKey, len(e.TagValue), MaxTagValueLength)
+}
+
 type Tag struct {
 	Id    int64
 	Key   string

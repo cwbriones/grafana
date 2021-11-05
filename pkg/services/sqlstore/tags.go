@@ -15,6 +15,9 @@ func EnsureTagsExist(sess *DBSession, tags []*models.Tag) ([]*models.Tag, error)
 		if exists {
 			tag.Id = existingTag.Id
 		} else {
+			if len(tag.Value) > models.MaxTagValueLength {
+				return nil, models.ErrTagValueTooLong{TagKey: tag.Key, TagValue: tag.Value}
+			}
 			_, err := sess.Table("tag").Insert(tag)
 			if err != nil {
 				return nil, err
