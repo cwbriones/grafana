@@ -5,10 +5,11 @@ import (
 )
 
 const (
-	// MaxAnnotationTagValueLength is the maximum allowed length for a valid tag value.
+	// MaxAnnotationTagValueLength is the maximum allowed length for a tag value in bytes.
 	MaxTagValueLength = 100
 )
 
+// ErrTagValueTooLong indicates that the given tag value has a length greater than MaxTagValueLength.
 type ErrTagValueTooLong struct {
 	TagKey   string
 	TagValue string
